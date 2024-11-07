@@ -1,4 +1,4 @@
-import DefaultLayout from '@/components/layouts/DefaultLayout';
+import { DefaultLayout } from '@/components';
 import { MainPage, MyPage, SignInPage, SignUpPage } from '@/pages';
 import ErrorPage from '@/pages/Error.page';
 import { ProtectedRoute } from '@/routes';
