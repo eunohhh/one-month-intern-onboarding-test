@@ -5,8 +5,9 @@ import { useMeQuery } from './queries';
 import { useAuthStore } from './zustand';
 
 function useAuth() {
-  const { logOut, setMe } = useAuthStore(
+  const { me, logOut, setMe } = useAuthStore(
     useShallow((state) => ({
+      me: state.me,
       logOut: state.logOut,
       setMe: state.setMe,
     })),
@@ -36,7 +37,7 @@ function useAuth() {
   }, [meFromQuery, setMe]);
 
   return {
-    me: meFromQuery,
+    me,
     isMePending,
     signUp,
     logIn,
