@@ -1,5 +1,6 @@
 import DefaultLayout from '@/components/layouts/DefaultLayout';
 import { MainPage, MyPage, SignInPage, SignUpPage } from '@/pages';
+import ErrorPage from '@/pages/Error.page';
 import { ProtectedRoute } from '@/routes';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -7,6 +8,7 @@ const router = createBrowserRouter(
   [
     {
       element: <DefaultLayout />,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: '/',
