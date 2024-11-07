@@ -8,7 +8,7 @@ export function useMeQuery(): UseQueryResult<MeResponse | null, Error> {
   return useQuery<MeResponse | null, Error>({
     queryKey: [QUERY_KEY_ME],
     queryFn: api.getUser,
-    staleTime: Infinity,
-    retry: 0,
+    staleTime: 10 * 60 * 1000,
+    refetchInterval: 10 * 60 * 1000,
   });
 }
