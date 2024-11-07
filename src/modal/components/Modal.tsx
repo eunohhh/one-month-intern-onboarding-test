@@ -29,12 +29,18 @@ function Modal({ isModalOpen, onClose, value, children }: ModalProps) {
     }
   }, [isModalOpen]);
 
+  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('#modal')) return;
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div
       className={cn('scroll-lock-layer center-flex z-40 items-end desktop:items-center')}
-      onClick={onClose}
+      onClick={handleClose}
     >
       <div
         className={cn(
@@ -46,15 +52,16 @@ function Modal({ isModalOpen, onClose, value, children }: ModalProps) {
         )}
       >
         <section
+          id="modal"
           className={cn(
-            'translate-y-0 center-flex flex-col gap-y-6 desktop:translate-y-0 scroll-lock-layer-children relative isolate max-h-[90%] h-1/4 w-1/4 overflow-x-hidden rounded bg-white desktop:max-h-[calc(100vh-8rem)] desktop:w-[30rem] desktop:rounded-2xl opacity-100 transition-all duration-300',
+            'translate-y-0 desktop:translate-y-0 center-flex flex-col gap-y-6 scroll-lock-layer-children relative isolate max-h-[90%] h-1/4 w-1/4 overflow-x-hidden rounded bg-white desktop:max-h-[calc(100vh-8rem)] desktop:w-[30rem] desktop:rounded-2xl opacity-100 transition-all duration-300',
             {
               'translate-y-4 desktop:translate-y-4 opacity-0': isClosing || isOpening,
             },
           )}
         >
           {value.type === 'error' && (
-            <div className="text-red-500 text-center whitespace-pre-wrap">{value.message}</div>
+            <div className="text-red-400 text-center whitespace-pre-wrap">{value.message}</div>
           )}
           {children}
           <button className="bg-slate-400 text-white rounded-md py-1 px-2" onClick={onClose}>

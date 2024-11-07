@@ -10,7 +10,14 @@ const useModalStore = create<ModalStore>((set) => ({
     },
   },
   openModal: (value) => set({ modalState: { isOpen: true, value } }),
-  closeModal: () => set({ modalState: { isOpen: false, value: { type: null, message: '' } } }),
+  closeModal: () => {
+    set((state: ModalStore) => ({ modalState: { ...state.modalState, isOpen: false } }));
+    setTimeout(() => {
+      set((state: ModalStore) => ({
+        modalState: { ...state.modalState, value: { type: null, message: '' } },
+      }));
+    }, 300);
+  },
 }));
 
 export default useModalStore;
