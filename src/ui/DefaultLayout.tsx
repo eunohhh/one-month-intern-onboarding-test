@@ -15,7 +15,7 @@ function DefaultLayout() {
 
   return (
     <>
-      <Modal isModalOpen={modalState.isOpen} onClose={closeModal} />
+      <Modal isModalOpen={modalState.isOpen} onClose={closeModal} value={modalState.value} />
       <section className="flex flex-col min-h-dvh">
         <Header />
         <main
