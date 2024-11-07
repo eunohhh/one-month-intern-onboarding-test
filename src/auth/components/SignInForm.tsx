@@ -1,4 +1,4 @@
-import type { AuthData } from '@/auth';
+import { type AuthData } from '@/auth';
 import useAuth from '@/auth/hooks';
 import { useEffect, useId } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
@@ -11,29 +11,33 @@ function SignInForm() {
     watch,
     formState: { errors },
   } = useForm();
-  const { me, logIn } = useAuth();
+  const { logIn, me } = useAuth();
   const idId = useId();
   const passwordId = useId();
   const navigate = useNavigate();
 
   const handleSignUpClick = () => navigate('/signup');
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async () => {
     if (Object.keys(errors).length > 0) return;
     const logInData: AuthData = {
       id: watch('id'),
       password: watch('password'),
     };
-    logIn(logInData);
+    await logIn(logInData);
+    navigate('/mypage');
   };
 
   useEffect(() => {
-    if (me) navigate('/mypage');
+    if (me) {
+      console.log('me', me);
+      // navigate('/mypage');
+    }
   }, [me, navigate]);
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+  // useEffect(() => {
+  //   console.log(errors);
+  // }, [errors]);
 
   return (
     <form

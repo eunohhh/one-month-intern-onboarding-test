@@ -1,4 +1,4 @@
-import { useEffect, useId } from 'react';
+import { useId } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../hooks';
@@ -16,23 +16,25 @@ function SignUpForm() {
   const passwordId = useId();
   const passwordConfirmId = useId();
   const nicknameId = useId();
-  const { signUp } = useAuth();
+  const { signUp, logIn } = useAuth();
 
-  const handleLogInClick = () => navigate('/');
+  const handleLogInClick = () => navigate('/signin');
 
-  const onSubmit: SubmitHandler<FieldValues> = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async () => {
     if (Object.keys(errors).length > 0) return;
     const signUpData: AuthData = {
       id: watch('id'),
       password: watch('password'),
       nickname: watch('nickname'),
     };
-    signUp(signUpData);
+    await signUp(signUpData);
+    await logIn({ id: signUpData.id, password: signUpData.password });
+    navigate('/mypage');
   };
 
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
+  // useEffect(() => {
+  //   console.log(errors);
+  // }, [errors]);
 
   return (
     <form
@@ -41,10 +43,11 @@ function SignUpForm() {
     >
       <h1 className="text-2xl font-semibold text-center">회원가입</h1>
       <div className="flex flex-col gap-y-4">
+        {/* 아이디 필드 */}
         <div className="flex flex-col gap-y-1.5 items-start">
           <div className="flex gap-x-1 justify-between w-full">
             <label htmlFor={idId} className="text-sm font-medium">
-              {'아이디'}
+              아이디
             </label>
             {errors.id && <p className="text-red-500 text-xs">{errors.id.message as string}</p>}
           </div>
@@ -55,10 +58,12 @@ function SignUpForm() {
             {...register('id', { required: '아이디를 입력해주세요.' })}
           />
         </div>
+
+        {/* 비밀번호 필드 */}
         <div className="flex flex-col gap-y-1.5 items-start">
           <div className="flex gap-x-1 justify-between w-full">
             <label htmlFor={passwordId} className="text-sm font-medium">
-              {'비밀번호'}
+              비밀번호
             </label>
             {errors.password && (
               <p className="text-red-500 text-xs">{errors.password.message as string}</p>
@@ -71,19 +76,25 @@ function SignUpForm() {
             {...register('password', {
               required: '비밀번호를 입력해주세요.',
               minLength: {
-                value: 4,
-                message: '비밀번호는 최소 4자리 이상이어야 합니다.',
+                value: 8,
+                message: '비밀번호는 최소 8자리 이상이어야 합니다.',
+              },
+              pattern: {
+                value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^\w\s]).*$/,
+                message: '비밀번호는 숫자, 영문자, 특수문자를 포함해야 합니다.',
               },
             })}
           />
         </div>
+
+        {/* 비밀번호 확인 필드 */}
         <div className="flex flex-col gap-y-1.5 items-start">
           <div className="flex gap-x-1 justify-between w-full">
             <label htmlFor={passwordConfirmId} className="text-sm font-medium">
-              {'비밀번호 확인'}
+              비밀번호 확인
             </label>
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message as string}</p>
+            {errors.passwordConfirm && (
+              <p className="text-red-500 text-xs">{errors.passwordConfirm.message as string}</p>
             )}
           </div>
           <input
@@ -91,19 +102,20 @@ function SignUpForm() {
             className="border px-4 py-2.5 rounded-md w-80"
             type="password"
             {...register('passwordConfirm', {
-              required: '비밀번호를 입력해주세요.',
-              minLength: {
-                value: 4,
-                message: '비밀번호는 최소 4자리 이상이어야 합니다.',
-              },
+              required: '비밀번호를 다시 입력해주세요.',
+              validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
             })}
           />
         </div>
+
+        {/* 닉네임 필드 */}
         <div className="flex flex-col gap-y-1.5 items-start">
           <div className="flex gap-x-1 justify-between w-full">
-            <label htmlFor={nicknameId} className="text-sm font-medium"></label>
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message as string}</p>
+            <label htmlFor={nicknameId} className="text-sm font-medium">
+              닉네임
+            </label>
+            {errors.nickname && (
+              <p className="text-red-500 text-xs">{errors.nickname.message as string}</p>
             )}
           </div>
           <input
@@ -120,6 +132,8 @@ function SignUpForm() {
           />
         </div>
       </div>
+
+      {/* 버튼들 */}
       <div className="flex flex-col justify-center items-center w-full gap-4">
         <button
           type="submit"

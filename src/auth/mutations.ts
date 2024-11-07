@@ -31,6 +31,14 @@ export function useLogInMutation(): UseMutationResult<MeResponse, Error, AuthDat
             message: '존재하지 않는 유저입니다.\n아이디 또는 비밀번호를 확인해주세요.',
           });
         }
+        if (
+          (error.response.data as CustomErrorResponse).message === '비밀번호가 일치하지 않습니다.'
+        ) {
+          openModal({
+            type: 'error',
+            message: '비밀번호가 일치하지 않습니다.\n아이디 또는 비밀번호를 확인해주세요.',
+          });
+        }
       }
     },
   });

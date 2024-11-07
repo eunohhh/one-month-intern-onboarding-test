@@ -13,6 +13,7 @@ export type Me = {
 export type MeResponse = {
   accessToken?: string;
   userId?: string;
+  id?: string;
   avatar?: string;
   nickname?: string;
   success: boolean;

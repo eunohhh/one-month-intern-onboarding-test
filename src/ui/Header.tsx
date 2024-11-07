@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const navigate = useNavigate();
-  const { me, logOut } = useAuth();
+  const { signOut, me } = useAuth();
 
   const handleHomeClick = () => navigate('/');
   const handleProfileImageclick = () => navigate('/mypage');
   const handleProfileClick = () => navigate('/mypage');
   const handleLogOutClick = () => {
-    logOut();
+    signOut();
     navigate('/');
   };
   const handleLogInClick = () => navigate('/signin');
+
+  console.log('me from header ===>', me);
 
   return (
     <header className="flex items-center p-4">
@@ -41,19 +43,19 @@ function Header() {
               </div>
               <button
                 onClick={handleHomeClick}
-                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
+                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
               >
                 Home
               </button>
               <button
                 onClick={handleProfileClick}
-                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
+                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
               >
                 My Profile
               </button>
               <button
                 onClick={handleLogOutClick}
-                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
+                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
               >
                 Log Out
               </button>
@@ -61,7 +63,7 @@ function Header() {
           ) : (
             <button
               onClick={handleLogInClick}
-              className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 animate-bounce"
+              className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-base px-4 lg:px-5 py-2 lg:py-2.5 mr-2 animate-bounce"
             >
               Log In
             </button>
