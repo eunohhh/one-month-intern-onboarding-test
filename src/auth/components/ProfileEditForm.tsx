@@ -31,7 +31,6 @@ function ProfileEditForm() {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const { nickname, avatar } = data;
-
     if (!avatar || avatar.length === 0) {
       openModal({
         type: 'error',
@@ -46,9 +45,7 @@ function ProfileEditForm() {
       });
       return;
     }
-
     const imgFile = avatar[0];
-
     const profileData = {
       avatar: imgFile,
       nickname,

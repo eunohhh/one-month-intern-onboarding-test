@@ -1,4 +1,4 @@
-import { ProfileEditForm } from '@/components';
+import { ProfileEditForm } from '@/auth/components';
 
 function MyPage() {
   return (
