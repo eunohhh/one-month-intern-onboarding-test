@@ -38,12 +38,9 @@ function Header() {
                   onClick={handleProfileImageclick}
                 />
               </div>
-              <button
-                onClick={handleHomeClick}
-                className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
-              >
-                Home
-              </button>
+              <span className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2">
+                {me.nickname}님 안녕하세요!
+              </span>
               <button
                 onClick={handleProfileClick}
                 className="text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2"
