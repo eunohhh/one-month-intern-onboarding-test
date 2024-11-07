@@ -1,7 +1,7 @@
-import { DefaultLayout } from '@/components';
 import { MainPage, MyPage, SignInPage, SignUpPage } from '@/pages';
 import ErrorPage from '@/pages/Error.page';
 import { ProtectedRoute } from '@/routes';
+import { DefaultLayout } from '@/ui';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter(
