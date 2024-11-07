@@ -4,10 +4,13 @@ import { ModalStore } from './types';
 const useModalStore = create<ModalStore>((set) => ({
   modalState: {
     isOpen: false,
-    children: null,
+    value: {
+      type: null,
+      message: '',
+    },
   },
-  openModal: (children) => set({ modalState: { isOpen: true, children } }),
-  closeModal: () => set({ modalState: { isOpen: false, children: null } }),
+  openModal: (value) => set({ modalState: { isOpen: true, value } }),
+  closeModal: () => set({ modalState: { isOpen: false, value: { type: null, message: '' } } }),
 }));
 
 export default useModalStore;

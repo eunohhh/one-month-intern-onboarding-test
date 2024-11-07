@@ -1,10 +1,17 @@
+export type ModalType = 'error' | 'success' | null;
+
+export type ModalValue = {
+  type: ModalType;
+  message: string;
+};
+
 export type ModalState = {
   isOpen: boolean;
-  children: React.ReactNode;
+  value: ModalValue;
 };
 
 export type ModalStore = {
   modalState: ModalState;
-  openModal: (children: React.ReactNode) => void;
+  openModal: (value: ModalValue) => void;
   closeModal: () => void;
 };
