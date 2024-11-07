@@ -11,6 +11,5 @@ export function useMeQuery(accessToken: string | null): UseQueryResult<MeRespons
     enabled: !!accessToken,
     staleTime: 10 * 60 * 1000,
     refetchInterval: 10 * 60 * 1000,
-    refetchOnWindowFocus: false,
   });
 }

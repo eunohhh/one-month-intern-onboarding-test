@@ -29,10 +29,7 @@ function SignInForm() {
   };
 
   useEffect(() => {
-    if (me) {
-      console.log('me', me);
-      // navigate('/mypage');
-    }
+    if (me) navigate('/mypage');
   }, [me, navigate]);
 
   // useEffect(() => {

@@ -9,8 +9,10 @@ function SignUpForm() {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm({
+    mode: 'onChange',
+  });
   const navigate = useNavigate();
   const idId = useId();
   const passwordId = useId();
@@ -20,21 +22,16 @@ function SignUpForm() {
 
   const handleLogInClick = () => navigate('/signin');
 
-  const onSubmit: SubmitHandler<FieldValues> = async () => {
-    if (Object.keys(errors).length > 0) return;
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const signUpData: AuthData = {
-      id: watch('id'),
-      password: watch('password'),
-      nickname: watch('nickname'),
+      id: data.id,
+      password: data.password,
+      nickname: data.nickname,
     };
     await signUp(signUpData);
     await logIn({ id: signUpData.id, password: signUpData.password });
     navigate('/mypage');
   };
-
-  // useEffect(() => {
-  //   console.log(errors);
-  // }, [errors]);
 
   return (
     <form
@@ -49,7 +46,7 @@ function SignUpForm() {
             <label htmlFor={idId} className="text-sm font-medium">
               아이디
             </label>
-            {errors.id && <p className="text-red-500 text-xs">{errors.id.message as string}</p>}
+            {errors.id && <p className="text-red-500 text-xs">{errors.id.message?.toString()}</p>}
           </div>
           <input
             id={idId}
@@ -66,7 +63,7 @@ function SignUpForm() {
               비밀번호
             </label>
             {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message as string}</p>
+              <p className="text-red-500 text-xs">{errors.password.message?.toString()}</p>
             )}
           </div>
           <input
@@ -94,7 +91,7 @@ function SignUpForm() {
               비밀번호 확인
             </label>
             {errors.passwordConfirm && (
-              <p className="text-red-500 text-xs">{errors.passwordConfirm.message as string}</p>
+              <p className="text-red-500 text-xs">{errors.passwordConfirm.message?.toString()}</p>
             )}
           </div>
           <input
@@ -115,7 +112,7 @@ function SignUpForm() {
               닉네임
             </label>
             {errors.nickname && (
-              <p className="text-red-500 text-xs">{errors.nickname.message as string}</p>
+              <p className="text-red-500 text-xs">{errors.nickname.message?.toString()}</p>
             )}
           </div>
           <input
@@ -137,7 +134,12 @@ function SignUpForm() {
       <div className="flex flex-col justify-center items-center w-full gap-4">
         <button
           type="submit"
-          className="bg-black text-white py-3 text-[15px] rounded-md font-medium hover:bg-black/80 transition active:bg-black/70 w-full"
+          disabled={!isValid} // 폼이 유효하지 않으면 버튼 비활성화
+          className={`${
+            isValid
+              ? 'bg-black hover:bg-black/80 active:bg-black/70'
+              : 'bg-gray-400 cursor-not-allowed'
+          } text-white py-3 text-[15px] rounded-md font-medium transition w-full`}
         >
           회원가입
         </button>

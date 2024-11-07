@@ -14,8 +14,6 @@ function Header() {
   };
   const handleLogInClick = () => navigate('/signin');
 
-  console.log('me from header ===>', me);
-
   return (
     <header className="flex items-center p-4">
       <nav className="h-full w-full border-gray-200 px-4 lg:px-6 py-2.5 justify-between">

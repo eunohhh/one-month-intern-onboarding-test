@@ -7,10 +7,23 @@ import { AuthData, CustomErrorResponse, MeResponse } from './types';
 
 export function useSignUpMutation(): UseMutationResult<MeResponse, Error, AuthData> {
   const queryClient = useQueryClient();
+  const { openModal } = useModalStore();
   return useMutation({
     mutationFn: (data: AuthData) => api.signUp(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_ME] });
+    },
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 409) {
+        if (
+          (error.response.data as CustomErrorResponse).message === '이미 존재하는 유저 id입니다.'
+        ) {
+          openModal({
+            type: 'error',
+            message: '이미 존재하는 아이디입니다.',
+          });
+        }
+      }
     },
   });
 }
