@@ -5,7 +5,12 @@ import { RouterProvider } from 'react-router-dom';
 function App() {
   return (
     <QueryProvider>
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={router}
+        future={{
+          v7_startTransition: true,
+        }}
+      />
     </QueryProvider>
   );
 }
