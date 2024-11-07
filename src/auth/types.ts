@@ -1,29 +1,29 @@
-export interface AuthData {
+export type AuthData = {
   id?: string;
   password?: string;
   nickname?: string;
   avatar?: File;
-}
+};
 
-export interface Me {
+export type Me = {
   userId: string;
   avatar: string | null;
   nickname: string;
-}
-export interface MeResponse {
+};
+export type MeResponse = {
   accessToken?: string;
   userId?: string;
   avatar?: string;
   nickname?: string;
   success: boolean;
-}
+};
 
-export interface IAuthStore {
+export type AuthStore = {
   me: Me | null;
   setMe: (me: Me | null) => void;
   logOut: () => void;
-}
+};
 
-export interface CustomErrorResponse {
+export type CustomErrorResponse = {
   message: string;
-}
+};
