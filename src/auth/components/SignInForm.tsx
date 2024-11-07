@@ -43,6 +43,7 @@ function SignInForm() {
     >
       <h1 className="text-2xl font-semibold text-center">로그인</h1>
       <div className="flex flex-col gap-y-4">
+        {/* 아이디 필드 */}
         <div className="flex flex-col gap-y-1.5 items-start">
           <div className="flex gap-x-1 justify-between w-full">
             <label htmlFor={idId} className="text-sm font-medium">
@@ -57,6 +58,8 @@ function SignInForm() {
             {...register('id', { required: '아이디를 입력해주세요.' })}
           />
         </div>
+
+        {/* 비밀번호 필드 */}
         <div className="flex flex-col gap-y-1.5 items-start">
           <div className="flex gap-x-1 justify-between w-full">
             <label htmlFor={passwordId} className="text-sm font-medium">
@@ -80,6 +83,8 @@ function SignInForm() {
           />
         </div>
       </div>
+
+      {/* 버튼들 */}
       <button
         type="submit"
         className="bg-black text-white py-3 text-base rounded-md font-medium hover:bg-black/80 transition active:bg-black/70"

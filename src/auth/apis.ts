@@ -1,6 +1,6 @@
 import axios, { Axios, AxiosError, AxiosResponse } from 'axios';
 import { AUTH_BASE_URL } from './constants';
-import { AuthData, MeResponse } from './types';
+import { AuthData, CustomErrorResponse, MeResponse } from './types';
 
 export class API {
   private axios: Axios;
@@ -27,7 +27,14 @@ export class API {
         }
         return response.data;
       },
-      (error: AxiosError) => {
+      (error: AxiosError<CustomErrorResponse>) => {
+        if (error.response?.status === 401) {
+          if (error.response.data.message === '토큰이 만료되었습니다. 다시 로그인 해주세요.') {
+            localStorage.removeItem('one-month-intern-token');
+            window.location.href = '/signin';
+            return Promise.reject(error);
+          }
+        }
         return Promise.reject(error);
       },
     );
@@ -46,7 +53,11 @@ export class API {
   }
   public async changeProfile(data: AuthData): Promise<MeResponse> {
     const path = '/profile';
-    return this.axios.patch<MeResponse, MeResponse>(path, data);
+    return this.axios.patch<MeResponse, MeResponse>(path, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   }
 }
 
