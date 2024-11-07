@@ -14,9 +14,9 @@ function useAuth() {
   );
 
   const { data: meFromQuery, isPending: isMePending } = useMeQuery();
-  const { mutateAsync: signUp } = useSignUpMutation();
-  const { mutateAsync: logIn } = useLogInMutation();
-  const { mutateAsync: changeProfile } = useChangeProfileMutation();
+  const { mutate: signUp } = useSignUpMutation();
+  const { mutate: logIn } = useLogInMutation();
+  const { mutate: changeProfile } = useChangeProfileMutation();
 
   useEffect(() => {
     if (meFromQuery) {

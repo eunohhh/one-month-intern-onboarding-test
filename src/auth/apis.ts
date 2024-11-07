@@ -1,7 +1,6 @@
 import axios, { Axios, AxiosError, AxiosResponse } from 'axios';
 import { AUTH_BASE_URL } from './constants';
 import { AuthData, MeResponse } from './types';
-import { useAuthStore } from './zustand';
 
 export class API {
   private axios: Axios;
@@ -22,17 +21,13 @@ export class API {
     });
 
     this.axios.interceptors.response.use(
-      <T>(response: AxiosResponse<T>): T => response.data,
-      async (error: AxiosError) => {
-        const originalRequest = error.config;
-        if (error && originalRequest) {
-          useAuthStore.getState().setMe(null);
-          localStorage.removeItem('one-month-intern-token');
-          if (typeof window !== 'undefined') {
-            window.location.href = '/login';
-          }
-          return Promise.reject(error);
+      <T extends MeResponse>(response: AxiosResponse<T>): T => {
+        if (response.data.accessToken) {
+          localStorage.setItem('one-month-intern-token', response.data.accessToken);
         }
+        return response.data;
+      },
+      (error: AxiosError) => {
         return Promise.reject(error);
       },
     );
