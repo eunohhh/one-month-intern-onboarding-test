@@ -42,7 +42,7 @@ export class API {
     return this.axios.post<MeResponse, MeResponse>(path, data);
   }
   public async logIn(data: AuthData): Promise<MeResponse> {
-    const path = '/login?expiresIn=30m';
+    const path = '/login?expiresIn=10m';
     return this.axios.post<MeResponse, MeResponse>(path, data);
   }
   public async getUser(): Promise<MeResponse> {
