@@ -33,8 +33,7 @@ function Header() {
               <div className="w-10 h-10 rounded-full overflow-hidden">
                 <img
                   className="w-full h-full object-cover cursor-pointer"
-                  // src={user?.avatar ? user.avatar : '/default-profile.jpg'}
-                  src="/default-profile.jpg"
+                  src={me?.avatar ? me.avatar : '/default-profile.jpg'}
                   alt="header-profile-image"
                   onClick={handleProfileImageclick}
                 />
