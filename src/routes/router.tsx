@@ -1,5 +1,4 @@
-import { MainPage, MyPage, SignInPage, SignUpPage } from '@/pages';
-import ErrorPage from '@/pages/Error.page';
+import { ErrorPage, MainPage, MyPage, SignInPage, SignUpPage } from '@/pages';
 import { ProtectedRoute } from '@/routes';
 import { DefaultLayout } from '@/ui';
 import { createBrowserRouter } from 'react-router-dom';
