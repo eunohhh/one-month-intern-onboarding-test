@@ -1,50 +1,64 @@
-# React + TypeScript + Vite
+# 한달인턴 온보딩 테스트
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+이 프로젝트는 인증 및 인가 기능을 구현하는 한달인턴 온보딩 테스트 프로젝트입니다.
+기능별 디렉터리 구조와 전역 상태 관리를 통해 인증 흐름을 효과적으로 관리할 수 있도록 설계되었습니다.
 
-Currently, two official plugins are available:
+[배포링크](https://one-month-intern-onboarding-test.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## :cat2: 목차
 
-## Expanding the ESLint configuration
+|   [🐈 프로젝트 소개 🐈](#cat2-프로젝트-소개)   |
+| :--------------------------------------------: |
+|  [🏠 프로젝트 구조 🏠](#house-프로젝트-구조)   |
+| [🍵 기술적 의사 결정 🍵](#tea-기술적-의사결정) |
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# :cat2: 프로젝트 소개
 
-- Configure the top-level `parserOptions` property like this:
+이 프로젝트는 사용자 인증 및 인가를 중심으로, 인증 상태 관리와 UI 반응을 다루는 기능을 포함하고 있습니다.
+전역 상태로 me 객체(사용자 인증 상태)를 관리하여 인증 흐름을 간소화하고, 폼 데이터 관리에 react-hook-form을 도입하여 폼 검증 및 유효성 검사 로직을 통합했습니다.
+| 프로젝트명 | 한달인턴 온보딩 테스트 |
+| :-------------: | :----------------------------------------: |
+| 분류 | 인증/인가 |
+| 개발 환경 | React 18 |
+| 사용 라이브러리 | react-hook-form, zustand, tailwind, axios |
+| 개발 기간 | 2024.11.07 ~ 2024.11.08 |
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+• 사용자 인증 및 인가: 로그인, 회원가입, 로그아웃 기능을 포함하여 전반적인 인증 흐름을 구현했습니다.
+• 전역 인증 상태 관리: 인증 상태를 전역 상태로 관리하여 필요한 컴포넌트에서 손쉽게 접근 및 갱신할 수 있도록 설계했습니다.
+• 유연한 폼 관리: react-hook-form을 도입하여 폼 상태를 효율적으로 관리하고, 유효성 검사를 통해 사용자 경험을 향상했습니다.
+
+## :house: 프로젝트 구조
+
+프로젝트의 디렉터리 구조는 기능 단위로 구성하여 각 기능이 독립적으로 관리될 수 있도록 했습니다.
+인증과 관련된 모듈은 /auth 폴더에, 모달 상태 관리는 /modal 폴더에 포함되어 있습니다.
+
+```text
+  📂 src
+  ┣ 📂 auth # 인증 기능 관련 폴더
+  ┃ ┣ 📂 components # 인증 UI 컴포넌트
+  ┃ ┣ 📜 hooks.ts # 인증 관련 커스텀 훅
+  ┃ ┣ 📜 queries.ts # 인증 관련 쿼리 함수
+  ┃ ┣ 📜 mutations.ts # 인증 관련 뮤테이션 함수
+  ┃ ┣ 📜 constants.ts # 인증 관련 상수 정의
+  ┃ ┣ 📜 types.ts # 인증 관련 타입 정의
+  ┃ ┣ 📜 zustand.ts # 인증 관련 전역 상태 관리 파일
+  ┃ ┗ 📜 api.ts # 인증 API 모듈
+  ┣ 📂 modal # 모달 상태 관리 관련 폴더
+  ┃ ┣ 📂 components # 모달 UI 컴포넌트
+  ┃ ┗ 📜 zustand.ts # 모달 관련 전역 상태 관리 파일
+  ┣ 📂 pages # 페이지 컴포넌트
+  ┣ 📂 ui # 공통 컴포넌트
+  ┣ 📂 providers # 공통 프로바이더 컴포넌트
+  ┗ 📂 routes # 라우팅 설정 파일
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# :tea: 기술적 의사 결정
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1.  기능별 디렉터리 구조
+    기능 단위로 디렉터리를 나누어 관리하여, 유지보수와 확장성을 높였습니다. 각 폴더는 특정 기능과 관련된 로직과 UI를 담고 있어 모듈성이 강화되었습니다.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+2.  전역 상태로 me 객체 관리
+    인증 상태를 전역 상태로 관리하여 인증과 관련된 여러 컴포넌트가 동일한 상태를 참조할 수 있도록 했습니다. 이를 통해 인증 상태 변화가 UI에 즉각 반영되도록 설계했습니다.
+
+3.  react-hook-form 사용
+    react-hook-form을 사용하여 폼 상태와 유효성 검사 로직을 간편하게 관리하고, 사용자 입력 오류를 사전에 방지했습니다.
