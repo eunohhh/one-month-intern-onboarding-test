@@ -1,5 +1,6 @@
 import { type AuthData } from '@/auth';
 import useAuth from '@/auth/hooks';
+import { LabelInput } from '@/ui';
 import { useEffect, useId } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -32,10 +33,6 @@ function SignInForm() {
     if (me) navigate('/mypage');
   }, [me, navigate]);
 
-  // useEffect(() => {
-  //   console.log(errors);
-  // }, [errors]);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -44,44 +41,32 @@ function SignInForm() {
       <h1 className="text-2xl font-semibold text-center">로그인</h1>
       <div className="flex flex-col gap-y-4">
         {/* 아이디 필드 */}
-        <div className="flex flex-col gap-y-1.5 items-start">
-          <div className="flex gap-x-1 justify-between w-full">
-            <label htmlFor={idId} className="text-sm font-medium">
-              {'아이디'}
-            </label>
-            {errors.id && <p className="text-red-500 text-xs">{errors.id.message as string}</p>}
-          </div>
-          <input
-            id={idId}
-            className="border px-4 py-2.5 rounded-md w-80"
-            type="text"
-            {...register('id', { required: '아이디를 입력해주세요.' })}
-          />
-        </div>
+        <LabelInput
+          id={idId}
+          register={register}
+          errors={errors}
+          label="아이디"
+          inputName="id"
+          options={{ required: '아이디를 입력해주세요.' }}
+          type="text"
+        />
 
         {/* 비밀번호 필드 */}
-        <div className="flex flex-col gap-y-1.5 items-start">
-          <div className="flex gap-x-1 justify-between w-full">
-            <label htmlFor={passwordId} className="text-sm font-medium">
-              {'비밀번호'}
-            </label>
-            {errors.password && (
-              <p className="text-red-500 text-xs">{errors.password.message as string}</p>
-            )}
-          </div>
-          <input
-            id={passwordId}
-            className="border px-4 py-2.5 rounded-md w-80"
-            type="password"
-            {...register('password', {
-              required: '비밀번호를 입력해주세요.',
-              minLength: {
-                value: 4,
-                message: '비밀번호는 최소 4자리 이상이어야 합니다.',
-              },
-            })}
-          />
-        </div>
+        <LabelInput
+          id={passwordId}
+          register={register}
+          errors={errors}
+          label="비밀번호"
+          inputName="password"
+          options={{
+            required: '비밀번호를 입력해주세요.',
+            minLength: {
+              value: 4,
+              message: '비밀번호는 최소 4자리 이상이어야 합니다.',
+            },
+          }}
+          type="password"
+        />
       </div>
 
       {/* 버튼들 */}
