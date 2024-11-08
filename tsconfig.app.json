@@ -13,7 +13,7 @@
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "esModuleInterop": true,
 
     /* Linting */
@@ -26,7 +26,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["@testing-library/jest-dom"]
   },
   "include": ["src"]
 }
