@@ -1,14 +1,18 @@
-import useAuth from '@/auth/hooks';
+import { useMeQuery } from '@/auth';
 import { Navigate, Outlet } from 'react-router-dom';
 
 function ProtectedRoute() {
-  const { me } = useAuth();
+  const token = localStorage.getItem('one-month-intern-token');
+  const { data: me, isPending } = useMeQuery(token);
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   if (!me) {
     return <Navigate to="/" replace={true} />;
   }
 
-  // 유저 정보가 있다면 자식 컴포넌트를 보여줌
   return <Outlet />;
 }
 
