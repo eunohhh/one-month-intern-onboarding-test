@@ -5,6 +5,10 @@ function ProtectedRoute() {
   const token = localStorage.getItem('one-month-intern-token');
   const { data: me, isPending } = useMeQuery(token);
 
+  if (!token) {
+    return <Navigate to="/" replace={true} />;
+  }
+
   if (isPending) {
     return <div>Loading...</div>;
   }
